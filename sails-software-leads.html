@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTM Leads Package — Sails Software</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f7f8fa;
+      color: #111827;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { max-width: 1440px; margin: 0 auto; padding: 32px 24px; }
+
+    /* Header */
+    .header { margin-bottom: 20px; }
+    .header h1 { font-size: 21px; font-weight: 700; color: #111827; }
+    .header .meta { font-size: 12px; color: #6b7280; margin-top: 3px; }
+
+    /* ICP box */
+    .icp-box {
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+      padding: 14px 18px; margin-bottom: 14px;
+    }
+    .icp-box .label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #9ca3af; margin-bottom: 8px;
+    }
+    .icp-fields { display: flex; flex-wrap: wrap; gap: 16px 32px; font-size: 13px; }
+    .icp-fields span { color: #374151; }
+    .icp-fields strong { color: #111827; }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex; background: #fff; border: 1px solid #e5e7eb;
+      border-radius: 8px; overflow: hidden; margin-bottom: 14px;
+    }
+    .stat {
+      flex: 1; padding: 14px 18px; border-right: 1px solid #e5e7eb;
+      min-width: 80px;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-value { font-size: 26px; font-weight: 700; color: #111827; line-height: 1; }
+    .stat-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-top: 3px; }
+
+    /* Wedge */
+    .wedge {
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+      padding: 11px 16px; font-size: 13px; color: #1e40af; margin-bottom: 16px;
+    }
+    .wedge strong { color: #1e3a8a; }
+
+    /* Controls */
+    .controls {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .search-box {
+      flex: 1; min-width: 180px; max-width: 300px;
+      padding: 7px 11px; border: 1px solid #d1d5db; border-radius: 6px;
+      font-size: 13px; outline: none; background: #fff; color: #111827;
+    }
+    .search-box:focus { border-color: #2563eb; box-shadow: 0 0 0 3px #dbeafe; }
+    .filter-group { display: flex; gap: 5px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 5px 11px; border: 1px solid #d1d5db; border-radius: 20px;
+      background: #fff; font-size: 12px; cursor: pointer; color: #374151;
+    }
+    .filter-btn:hover { background: #f3f4f6; }
+    .filter-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+    .btn-csv {
+      margin-left: auto; padding: 7px 14px; background: #111827; color: #fff;
+      border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500;
+    }
+    .btn-csv:hover { background: #374151; }
+    .row-count { font-size: 11px; color: #9ca3af; margin-bottom: 8px; }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto; border-radius: 8px; border: 1px solid #e5e7eb;
+      background: #fff; margin-bottom: 28px;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+    thead th {
+      padding: 10px 13px; text-align: left; font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em; color: #9ca3af;
+      background: #f9fafb; border-bottom: 1px solid #e5e7eb; cursor: pointer;
+      white-space: nowrap; user-select: none;
+    }
+    thead th:hover { background: #f3f4f6; color: #374151; }
+    .sort-icon { margin-left: 3px; font-size: 9px; opacity: 0.35; }
+    thead th.sorted .sort-icon { opacity: 1; color: #2563eb; }
+    tbody tr { border-bottom: 1px solid #f3f4f6; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+    td { padding: 11px 13px; vertical-align: top; font-size: 13px; }
+
+    .company-name { font-weight: 600; color: #111827; font-size: 13px; margin-bottom: 2px; }
+    .company-seg { font-size: 11px; color: #9ca3af; margin-bottom: 4px; }
+    .mini-links { display: flex; gap: 8px; font-size: 11px; }
+    .mini-links a { color: #9ca3af; }
+    .mini-links a:hover { color: #2563eb; }
+
+    .dm-name { font-weight: 500; color: #111827; font-size: 13px; }
+    .dm-title { font-size: 11px; color: #6b7280; margin-bottom: 5px; }
+    .dm-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .signal-text, .angle-text { font-size: 12px; color: #374151; line-height: 1.45; max-width: 280px; }
+    .angle-text { color: #1d4ed8; }
+
+    /* Pills */
+    .pill {
+      display: inline-block; padding: 2px 7px; border-radius: 20px;
+      font-size: 10px; font-weight: 600; white-space: nowrap; line-height: 1.6;
+    }
+    .pill-high { background: #dcfce7; color: #15803d; }
+    .pill-medium { background: #fef9c3; color: #a16207; }
+    .pill-low { background: #f3f4f6; color: #6b7280; }
+    .pill-none { background: #f3f4f6; color: #9ca3af; }
+    .pill-likely { background: #dbeafe; color: #1d4ed8; }
+    .pill-guess { background: #fef9c3; color: #a16207; }
+    .pill-verified { background: #dcfce7; color: #15803d; }
+    .pill-icp { background: #e0f2fe; color: #0369a1; }
+    .pill-hiring { background: #f3e8ff; color: #7c3aed; }
+
+    .no-results {
+      padding: 40px; text-align: center; color: #9ca3af; font-size: 13px; display: none;
+    }
+
+    /* Buyer signals */
+    .section-title {
+      font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 12px;
+    }
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px; margin-bottom: 28px;
+    }
+    .signal-card {
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .sc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .sc-platform { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; }
+    .sc-summary { font-size: 12px; color: #374151; line-height: 1.5; margin-bottom: 8px; }
+    .sc-fit { font-size: 11px; color: #2563eb; font-weight: 500; margin-bottom: 8px; }
+    .sc-link { font-size: 11px; color: #9ca3af; }
+    .sc-link:hover { color: #2563eb; }
+
+    .footer { font-size: 11px; color: #9ca3af; padding-top: 14px; border-top: 1px solid #e5e7eb; line-height: 1.6; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>GTM Leads Package — Sails Software</h1>
+    <div class="meta">Generated Sep 10, 2026 &nbsp;·&nbsp; sailssoftware.com &nbsp;·&nbsp; US B2B AI/ML Services &amp; Products Motion</div>
+  </div>
+
+  <div class="icp-box">
+    <div class="label">Confirmed ICP</div>
+    <div class="icp-fields">
+      <span><strong>Industries:</strong> Banking / Fintech, Pharma / Life Sciences, HR Tech</span>
+      <span><strong>Size:</strong> 500–10,000 employees</span>
+      <span><strong>Geo:</strong> United States</span>
+      <span><strong>Buyer:</strong> CTO, VP Engineering, CDO, Head of AI/ML, CHRO (for JobAlign)</span>
+      <span><strong>Signal:</strong> Active AI/ML investment or hiring</span>
+      <span><strong>Anti-ICP:</strong> Seed/Series A startups, pure consulting firms, direct competitors</span>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-value" id="stat-total">23</div>
+      <div class="stat-label">Total Leads</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-high">15</div>
+      <div class="stat-label">High Priority</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="stat-medium">8</div>
+      <div class="stat-label">Medium Priority</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Verticals</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Buyer Signals</div>
+    </div>
+  </div>
+
+  <div class="wedge">
+    <strong>Competitive wedge:</strong> Generic AI vendors (Cognizant, Infosys, Wipro) sell headcount and pilots. Sails Software sells outcomes — production-grade AI, not demos. The single biggest pain point across all three verticals is AI that never leaves the pilot stage. Lead every outreach with: <em>"We build AI that ships to production."</em> For HR prospects, lead with JobAlign's semantic matching vs. ATS keyword gatekeeping.
+  </div>
+
+  <div class="controls">
+    <input type="text" class="search-box" id="search" placeholder="Search companies, signals, angles…" oninput="renderTable()" />
+    <div class="filter-group" id="seg-filters">
+      <button class="filter-btn active" onclick="setFilter('seg','all',this)">All Verticals</button>
+      <button class="filter-btn" onclick="setFilter('seg','Financial Services',this)">Financial Services</button>
+      <button class="filter-btn" onclick="setFilter('seg','Pharma / Life Sciences',this)">Pharma / Life Sciences</button>
+      <button class="filter-btn" onclick="setFilter('seg','HR Tech',this)">HR Tech</button>
+    </div>
+    <div class="filter-group" id="pri-filters">
+      <button class="filter-btn active" onclick="setFilter('pri','all',this)">All Priorities</button>
+      <button class="filter-btn" onclick="setFilter('pri','High',this)">High</button>
+      <button class="filter-btn" onclick="setFilter('pri','Medium',this)">Medium</button>
+    </div>
+    <button class="btn-csv" onclick="downloadCSV()">Download CSV</button>
+  </div>
+
+  <div class="row-count" id="row-count"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('company')">Company <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('priority')">Priority <span class="sort-icon">↕</span></th>
+          <th>Decision-Maker</th>
+          <th>Source</th>
+          <th onclick="sortBy('size_n')">Size <span class="sort-icon">↕</span></th>
+          <th onclick="sortBy('hq')">HQ <span class="sort-icon">↕</span></th>
+          <th>Signal / Fit</th>
+          <th>Suggested Angle</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="no-results" id="no-results">No leads match the current filters.</div>
+  </div>
+
+  <div class="section-title">Buyer Signals — Pain in the Wild</div>
+  <div class="signals-grid" id="signals-grid"></div>
+
+  <div class="footer">
+    Data sourced from public company websites, LinkedIn, job postings, SEC filings, and news (Sep 2026). Decision-maker emails not enriched — run LinkedIn Sales Navigator or Apollo for email waterfall. All leads are US-based companies with active AI/ML investment signals. Contacts labeled "Research LinkedIn" require a manual LinkedIn search for the named role at that company.
+  </div>
+
+</div>
+
+<script>
+const leads = [
+  // ── Financial Services ──
+  {
+    company:"Jack Henry & Associates", segment:"Financial Services",
+    website:"https://www.jackhenry.com", linkedin:"https://www.linkedin.com/company/jack-henry",
+    priority:"High",
+    dm_name:"David Foss", dm_title:"President & CEO",
+    dm_li:"https://www.linkedin.com/in/davidfoss",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target + Hiring Intent",
+    size:"~7,240", size_n:7240, funding:"Public (JKHY)", hq:"Monett, MO",
+    signal:"Actively hiring AI Consultant, Sr. AI Adoption Coach, and AI Engineer roles (Jul–Sep 2026). Serving 7,400+ community bank clients with cloud migration and AI advisory.",
+    angle:"Position Sails as the AI implementation partner for their bank clients — accelerate their clients' AI advisory programs.",
+    signal_date:"Sep 2026"
+  },
+  {
+    company:"Enova International", segment:"Financial Services",
+    website:"https://www.enova.com", linkedin:"https://www.linkedin.com/company/enova-international",
+    priority:"High",
+    dm_name:"David Fisher", dm_title:"CEO",
+    dm_li:"https://www.linkedin.com/in/david-fisher-enova",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~1,836", size_n:1836, funding:"Public (ENVA)", hq:"Chicago, IL",
+    signal:"Proprietary ML platform (Colossus) for credit & fraud decisioning. Hiring Lead Data Scientist (Fraud), Sr. Data Scientist (Marketing & Pricing), Sr. BI Engineer (Jul 2026).",
+    angle:"MLOps augmentation for Colossus — offer ML model deployment and monitoring to accelerate their fraud/credit model iteration cycles.",
+    signal_date:"Jul 2026"
+  },
+  {
+    company:"Bottomline Technologies", segment:"Financial Services",
+    website:"https://www.bottomline.com", linkedin:"https://www.linkedin.com/company/bottomline-payments",
+    priority:"High",
+    dm_name:"Research LinkedIn", dm_title:"CTO / VP Engineering",
+    dm_li:"https://www.linkedin.com/company/bottomline-payments/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~3,362", size_n:3362, funding:"Private (Thoma Bravo)", hq:"Portsmouth, NH",
+    signal:"AI-powered payments modernization actively underway. Posting Product Director for 'Cash Management & AI-Powered Payments' ($237–248K). 14% headcount growth 2023–2026.",
+    angle:"Agentic payment workflows — partner on DevOps and SaaS development to ship their AI-native payments platform faster.",
+    signal_date:"Jul 2026"
+  },
+  {
+    company:"Nuvei", segment:"Financial Services",
+    website:"https://www.nuvei.com", linkedin:"https://www.linkedin.com/company/nuvei",
+    priority:"High",
+    dm_name:"Philip Fayer", dm_title:"Chairman & CEO",
+    dm_li:"https://www.linkedin.com/in/philip-fayer",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~2,278", size_n:2278, funding:"Private (Advent, CPPIB)", hq:"Scottsdale, AZ",
+    signal:"New CPTO mandate to 'build an AI-native, agentic enterprise.' 117% YoY jump in job postings. Hiring SVP Head of Agentic Engineering, Enterprise Architect for Agentic Delivery.",
+    angle:"Agentic enterprise build — their CPTO mandate maps directly to Sails' custom AI/ML stack; lead with 'we build AI-native payment experiences that ship.'",
+    signal_date:"Sep 2026"
+  },
+  {
+    company:"Marqeta", segment:"Financial Services",
+    website:"https://www.marqeta.com", linkedin:"https://www.linkedin.com/company/marqeta",
+    priority:"High",
+    dm_name:"Simon Khalaf", dm_title:"CEO",
+    dm_li:"https://www.linkedin.com/in/khalaf",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~967", size_n:967, funding:"Public (MQ)", hq:"Oakland, CA",
+    signal:"Engineering-heavy platform (~33% staff) with complex real-time data pipelines. Active job postings up 27.5% YoY in 2026; 38 new roles/month.",
+    angle:"Real-time ML risk/fraud models — offer ML engineering to enhance their card decisioning engine with custom models beyond platform defaults.",
+    signal_date:"Aug 2026"
+  },
+  {
+    company:"Paylocity", segment:"Financial Services",
+    website:"https://www.paylocity.com", linkedin:"https://www.linkedin.com/company/paylocity",
+    priority:"High",
+    dm_name:"Toby Williams", dm_title:"President & CEO",
+    dm_li:"https://www.linkedin.com/in/tobydwilliams",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target + Hiring Intent",
+    size:"~6,700", size_n:6700, funding:"Public (PCTY)", hq:"Schaumburg, IL",
+    signal:"Publicly doubling down on AI (branded 'Ignite AI'). Launched AI assistant products 2025–2026. Hiring across Product, Engineering, and AI/ML tracks.",
+    angle:"Ignite AI acceleration — offer SaaS dev and ML engineering to help Paylocity ship their AI product roadmap faster.",
+    signal_date:"Sep 2026"
+  },
+  {
+    company:"SoFi Technologies", segment:"Financial Services",
+    website:"https://www.sofi.com", linkedin:"https://www.linkedin.com/company/sofi",
+    priority:"High",
+    dm_name:"Anthony Noto", dm_title:"CEO",
+    dm_li:"https://www.linkedin.com/in/anthonynoto",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~4,500", size_n:4500, funding:"Public (SOFI)", hq:"San Francisco, CA",
+    signal:"Hiring Sr. Director AI Enterprise Transformation, Sr. Data Scientist, Staff Security Detection Engineer ML (all active Sep 2026). Full digital banking AI transformation.",
+    angle:"Enterprise AI transformation — AI/ML consulting for credit decisioning and personalization models; complement their internal AI team.",
+    signal_date:"Sep 2026"
+  },
+  {
+    company:"Blend Labs", segment:"Financial Services",
+    website:"https://blend.com", linkedin:"https://www.linkedin.com/company/blend-",
+    priority:"Medium",
+    dm_name:"Nima Ghamsari", dm_title:"Co-Founder & CEO",
+    dm_li:"https://www.linkedin.com/in/nima-ghamsari",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~424", size_n:424, funding:"$150M PE (2024)", hq:"San Francisco, CA",
+    signal:"Digital lending platform for banks and credit unions. Early AI signals. $150M private equity raise (May 2024) indicates product investment runway. 17 open roles in 2026.",
+    angle:"AI product differentiation — lean team post-restructuring creates external ML demand; help Sails differentiate their lending platform with custom AI.",
+    signal_date:"May 2024"
+  },
+  {
+    company:"Galileo Financial Technologies", segment:"Financial Services",
+    website:"https://www.galileo-ft.com", linkedin:"https://www.linkedin.com/company/galileo-financial-technologies",
+    priority:"Medium",
+    dm_name:"Research LinkedIn", dm_title:"CTO / VP Engineering",
+    dm_li:"https://www.linkedin.com/company/galileo-financial-technologies/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~643", size_n:643, funding:"Subsidiary (SoFi)", hq:"Sandy, UT",
+    signal:"API-first banking-as-a-service platform. 72 active job postings in 2026 (up 31.6%), 35 new roles/month. Complex payment rails need ML-based fraud and analytics.",
+    angle:"BaaS ML modernization — offer fraud detection and analytics ML engineering for their payment infrastructure.",
+    signal_date:"Aug 2026"
+  },
+  // ── Pharma / Life Sciences ──
+  {
+    company:"Tempus AI", segment:"Pharma / Life Sciences",
+    website:"https://www.tempus.com", linkedin:"https://www.linkedin.com/company/tempusai",
+    priority:"High",
+    dm_name:"Eric Lefkofsky", dm_title:"CEO & Founder",
+    dm_li:"https://www.linkedin.com/in/lefkofsky",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target + Hiring Intent",
+    size:"~3,800", size_n:3800, funding:"Public (TEM)", hq:"Chicago, IL",
+    signal:"Precision medicine AI for genomic sequencing and oncology. Acquired Deep 6 AI (clinical trial matching, 2025). 757 product/engineering employees; rapid AI platform expansion.",
+    angle:"Clinical data pipeline scale-up — ML infrastructure and cloud-native engineering to support post-acquisition platform growth.",
+    signal_date:"2025"
+  },
+  {
+    company:"Natera", segment:"Pharma / Life Sciences",
+    website:"https://www.natera.com", linkedin:"https://www.linkedin.com/company/natera",
+    priority:"High",
+    dm_name:"Steve Chapman", dm_title:"CEO",
+    dm_li:"https://www.linkedin.com/in/steve-chapman-natera",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~6,200", size_n:6200, funding:"Public (NTRA)", hq:"Austin, TX",
+    signal:"250K+ tumor exomes dataset. Launched proprietary AI foundation model platform (Aug 2025). Hiring Staff ML Scientist – Translational AI. 66% headcount growth 2023–2026.",
+    angle:"AI foundation model engineering — partner on model training infrastructure and deployment for their newly launched genomics AI platform.",
+    signal_date:"Aug 2025"
+  },
+  {
+    company:"Recursion Pharmaceuticals", segment:"Pharma / Life Sciences",
+    website:"https://www.recursion.com", linkedin:"https://www.linkedin.com/company/recursion-pharmaceuticals",
+    priority:"High",
+    dm_name:"Chris Gibson", dm_title:"CEO & Co-Founder",
+    dm_li:"https://www.linkedin.com/in/chris-gibson-recursion",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~800", size_n:800, funding:"Public (RXRX)", hq:"Salt Lake City, UT",
+    signal:"End-to-end AI drug discovery (Recursion OS) + BioHive-2 supercomputer. Engineering is largest team (~306/660 employees). Active Sanofi/Roche partnerships requiring data pipeline integrations.",
+    angle:"BioHive-2 cloud optimization — DevOps and MLOps consulting to maximize compute efficiency and accelerate model training cycles.",
+    signal_date:"2025"
+  },
+  {
+    company:"Guardant Health", segment:"Pharma / Life Sciences",
+    website:"https://www.guardanthealth.com", linkedin:"https://www.linkedin.com/company/guardanthealth",
+    priority:"High",
+    dm_name:"Helmy Eltoukhy", dm_title:"CEO & Co-Founder",
+    dm_li:"https://www.linkedin.com/in/helmyeltoukhy",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target + Hiring Intent",
+    size:"~2,000", size_n:2000, funding:"Public (GH)", hq:"Palo Alto, CA",
+    signal:"Liquid biopsy + AI analytics for cancer diagnostics. Launched Shield colorectal cancer screening backed by AI. Actively hiring data and software engineers.",
+    angle:"Clinico-genomic AI consulting — ML model development for diagnostic AI platform; cloud infrastructure and data pipeline expertise.",
+    signal_date:"2025"
+  },
+  {
+    company:"Exact Sciences", segment:"Pharma / Life Sciences",
+    website:"https://www.exactsciences.com", linkedin:"https://www.linkedin.com/company/exact-sciences",
+    priority:"High",
+    dm_name:"Research LinkedIn", dm_title:"Head of AI / CDO",
+    dm_li:"https://www.linkedin.com/company/exact-sciences/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~7,200", size_n:7200, funding:"Public (EXAS)", hq:"Madison, WI",
+    signal:"SEC filing (Dec 2025) explicitly cites AI adoption across business. Active Sr. Data Engineer hiring. 7,100 US full-time employees with growing tech team.",
+    angle:"AI adoption consulting — help operationalize their stated AI initiatives across diagnostics operations and data governance.",
+    signal_date:"Dec 2025"
+  },
+  {
+    company:"Saama Technologies", segment:"Pharma / Life Sciences",
+    website:"https://www.saama.com", linkedin:"https://www.linkedin.com/company/saama-technologies",
+    priority:"High",
+    dm_name:"Research LinkedIn", dm_title:"CTO / VP Engineering",
+    dm_li:"https://www.linkedin.com/company/saama-technologies/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~1,200", size_n:1200, funding:"Carlyle Group ($507M)", hq:"Campbell, CA",
+    signal:"AI-driven clinical data mgmt SaaS for pharma (powers Pfizer R&D portfolio). Launched modular AI Agents platform (Sep 2025). Expanding agentic AI requiring engineering partners.",
+    angle:"Agentic AI engineering — help build out their clinical AI Agents platform with custom SaaS development and cloud infrastructure.",
+    signal_date:"Sep 2025"
+  },
+  {
+    company:"Certara", segment:"Pharma / Life Sciences",
+    website:"https://www.certara.com", linkedin:"https://www.linkedin.com/company/certara",
+    priority:"Medium",
+    dm_name:"William Feehery", dm_title:"CEO",
+    dm_li:"https://www.linkedin.com/in/william-feehery",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~1,550", size_n:1550, funding:"Public (CERT)", hq:"Radnor, PA",
+    signal:"Biosimulation tools used by 90%+ of FDA-approved novel drugs. Accelerating AI/ML integration across modeling and regulatory submissions. 440+ PhD employees.",
+    angle:"Biosimulation ML augmentation — ML consulting for regulatory submission modeling and clinical trial design workflow optimization.",
+    signal_date:"2025"
+  },
+  // ── HR Tech ──
+  {
+    company:"Phenom", segment:"HR Tech",
+    website:"https://phenom.com", linkedin:"https://www.linkedin.com/company/phenomtxm",
+    priority:"High",
+    dm_name:"Mahe Bayireddi", dm_title:"CEO & Co-Founder",
+    dm_li:"https://www.linkedin.com/in/mahe-bayireddi",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~1,450", size_n:1450, funding:"Private ($485M raised)", hq:"Ambler, PA",
+    signal:"Applied AI talent platform for acquisition, mobility, and workforce analytics. Strong enterprise client base. Heavy AI product investment with growing engineering team.",
+    angle:"JobAlign integration — position JobAlign as an AI matching complement for Phenom clients needing deeper ML resume scoring beyond platform defaults.",
+    signal_date:"2026"
+  },
+  {
+    company:"isolved", segment:"HR Tech",
+    website:"https://isolvedhcm.com", linkedin:"https://www.linkedin.com/company/isolved",
+    priority:"High",
+    dm_name:"Research LinkedIn", dm_title:"CTO / VP Product",
+    dm_li:"https://www.linkedin.com/company/isolved/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~1,417", size_n:1417, funding:"Private ($450M raised)", hq:"Charlotte, NC",
+    signal:"HCM suite serving 200,000+ employers and 9M US workers. 17.7% YoY headcount growth. Major funding round signals aggressive AI product expansion.",
+    angle:"Custom AI augmentation — offer JobAlign to isolved clients who outgrow built-in AI matching; Sails handles implementation and customization.",
+    signal_date:"2026"
+  },
+  {
+    company:"Avature", segment:"HR Tech",
+    website:"https://avature.net", linkedin:"https://www.linkedin.com/company/avature",
+    priority:"High",
+    dm_name:"Dimitri Boylan", dm_title:"CEO & Founder",
+    dm_li:"https://www.linkedin.com/in/dimitri-boylan",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~1,237", size_n:1237, funding:"Private", hq:"New York, NY",
+    signal:"Enterprise SaaS for talent acquisition (CRM, ATS, video, DEI). Serves 110 Fortune 500 companies. Configure-heavy AI creates demand for custom ML matching layers.",
+    angle:"Enterprise AI consulting — help Fortune 500 Avature clients deploy custom ML matching models that exceed the platform's configure-heavy defaults.",
+    signal_date:"2026"
+  },
+  {
+    company:"Addison Group", segment:"HR Tech",
+    website:"https://addisongroup.com", linkedin:"https://www.linkedin.com/company/addisongroup",
+    priority:"High",
+    dm_name:"Research LinkedIn", dm_title:"CEO / CTO",
+    dm_li:"https://www.linkedin.com/company/addisongroup/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~1,028", size_n:1028, funding:"Private ($550M+ revenue)", hq:"Chicago, IL",
+    signal:"Top US staffing firm (IT, HR, Finance, Healthcare). Forbes top recruiting firm 2022–2024. No proprietary AI product — prime JobAlign target across 33 US offices.",
+    angle:"JobAlign direct sale — no AI product today; position JobAlign as their AI recruiting edge and revenue differentiator.",
+    signal_date:"2026"
+  },
+  {
+    company:"Eightfold AI", segment:"HR Tech",
+    website:"https://eightfold.ai", linkedin:"https://www.linkedin.com/company/eightfoldai",
+    priority:"Medium",
+    dm_name:"Ashutosh Garg", dm_title:"CEO & Co-Founder",
+    dm_li:"https://www.linkedin.com/in/ashutoshgarg1",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~587", size_n:587, funding:"$396M raised", hq:"Santa Clara, CA",
+    signal:"Deep learning talent intelligence platform. 24 languages, 155+ countries. 1.8% monthly headcount growth. Actively hiring AI/ML engineers.",
+    angle:"Partner / integration channel — approach as an implementation partner for Eightfold clients needing custom ML fine-tuning or integrations.",
+    signal_date:"2026"
+  },
+  {
+    company:"Appcast", segment:"HR Tech",
+    website:"https://appcast.io", linkedin:"https://www.linkedin.com/company/appcast-io",
+    priority:"Medium",
+    dm_name:"Research LinkedIn", dm_title:"CTO / Head of Data Science",
+    dm_li:"https://www.linkedin.com/company/appcast-io/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"ICP Target", sourcing:"ICP Target",
+    size:"~394", size_n:394, funding:"Subsidiary (StepStone Group)", hq:"Lebanon, NH",
+    signal:"Programmatic job advertising and recruitment marketing for 2,000+ clients. Optimizes ad spend with data science/ML. Acquired Bayard Advertising (2023).",
+    angle:"Downstream matching layer — position JobAlign to improve candidate quality (not just click volume) for Appcast's programmatic ad clients.",
+    signal_date:"2023"
+  },
+  {
+    company:"Joveo", segment:"HR Tech",
+    website:"https://joveo.com", linkedin:"https://www.linkedin.com/company/joveo",
+    priority:"Medium",
+    dm_name:"Research LinkedIn", dm_title:"CEO / CTO",
+    dm_li:"https://www.linkedin.com/company/joveo/people/",
+    dm_email:"—", dm_conf:"None",
+    source:"Creative - Hiring Intent", sourcing:"Hiring Intent",
+    size:"~280", size_n:280, funding:"Private", hq:"Menlo Park, CA",
+    signal:"AI-powered programmatic job advertising platform. 22.5% YoY headcount growth — fastest-growing mid-size HR tech company. Strong ML/data science foundation.",
+    angle:"ML consulting + JobAlign — help Joveo improve programmatic optimization ML accuracy, and position JobAlign for their enterprise employer clients.",
+    signal_date:"2026"
+  }
+];
+
+const buyerSignals = [
+  {
+    platform:"LinkedIn — CTO Pulse",
+    url:"https://www.linkedin.com/posts/heysourav_cto-another-ai-pilot-failed-why-cant-activity-7343662238865506304-ZXan",
+    summary:"CTO Sourav Ranjan Padhi: 'Another AI pilot failed. Why can't we scale these things?' Describes the recurring enterprise pattern where AI pilots launch, nothing reaches production, the cycle repeats.",
+    fit:"AI/ML Consulting — Sails' core value is moving AI from pilot to production.",
+    strength:"High"
+  },
+  {
+    platform:"Substack — Sailing the Data Ocean",
+    url:"https://sailingthedataocean.substack.com/p/why-i-replaced-two-ai-frameworks",
+    summary:"Software architect replaced two AI frameworks with custom code: generic tools weren't built for production concerns — cost control, risk enforcement, memory across sessions. Spent more time fighting tools than building.",
+    fit:"AI/ML Consulting — custom ML solutions for production requirements, not retrofitted frameworks.",
+    strength:"High"
+  },
+  {
+    platform:"Spott.io — Recruiter Industry Blog",
+    url:"https://spott.io/resources/why-ats-ai-features-dont-work",
+    summary:"Recruiters report AI features bolted onto legacy ATS platforms consistently underdeliver. One team 'never opened it again.' Root cause: ATS stores text in rigid fields, not meaning.",
+    fit:"JobAlign — AI-native semantic matching vs. ATS keyword gatekeeping is exactly the pain JobAlign solves.",
+    strength:"High"
+  },
+  {
+    platform:"TechScreen — Industry Analysis",
+    url:"https://techscreen.com/ats-has-institutionalized-ghosting-by-focusing-on-keywords-over-quality/",
+    summary:"~75% of qualified candidates filtered before any human review. Companies spend billions on new applicants while millions of qualified candidates sit dormant in their own databases.",
+    fit:"JobAlign — replacing keyword gatekeeping with intelligent match scoring is the core product promise.",
+    strength:"High"
+  },
+  {
+    platform:"Substack — Decoding AI",
+    url:"https://www.decodingai.com/p/building-vertical-ai-agents-case-study-1",
+    summary:"Founding team replaced RAG + MCP + agentic loops with custom code after generic AI frameworks caused latency, instability, and higher costs. Regret: adopting heavyweight patterns before understanding production requirements.",
+    fit:"AI/ML Consulting — engineering leaders burned by generic AI frameworks are a primary ICP for Sails' custom consulting.",
+    strength:"Medium"
+  }
+];
+
+// State
+let segFilter = 'all', priFilter = 'all', sortCol = null, sortDir = 1;
+
+function pOrder(p) { return p==='High'?0:p==='Medium'?1:2; }
+
+function getFiltered() {
+  const q = document.getElementById('search').value.toLowerCase();
+  return leads.filter(l => {
+    const segOk = segFilter==='all' || l.segment===segFilter;
+    const priOk = priFilter==='all' || l.priority===priFilter;
+    const searchOk = !q || [l.company,l.segment,l.hq,l.signal,l.angle,l.dm_name,l.dm_title,l.source,l.funding]
+      .some(f => f && f.toLowerCase().includes(q));
+    return segOk && priOk && searchOk;
+  });
+}
+
+function renderTable() {
+  let filtered = getFiltered();
+  if (sortCol) {
+    filtered.sort((a,b) => {
+      let av = a[sortCol], bv = b[sortCol];
+      if (sortCol==='priority') { av=pOrder(av); bv=pOrder(bv); return (av-bv)*sortDir; }
+      if (sortCol==='size_n') return (av-bv)*sortDir;
+      return av<bv?-sortDir:av>bv?sortDir:0;
+    });
+  } else {
+    filtered.sort((a,b) => pOrder(a.priority)-pOrder(b.priority));
+  }
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  const noRes = document.getElementById('no-results');
+  noRes.style.display = filtered.length ? 'none' : 'block';
+  document.getElementById('row-count').textContent = `Showing ${filtered.length} of ${leads.length} leads`;
+  document.getElementById('stat-total').textContent = filtered.length;
+  document.getElementById('stat-high').textContent = filtered.filter(l=>l.priority==='High').length;
+  document.getElementById('stat-medium').textContent = filtered.filter(l=>l.priority==='Medium').length;
+
+  filtered.forEach(l => {
+    const sourceClass = l.source.includes('Hiring')?'pill-hiring':l.source.includes('Competitor')?'pill-competitor':'pill-icp';
+    const confClass = 'pill-'+l.dm_conf.toLowerCase();
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="company-name">${l.company}</div>
+        <div class="company-seg">${l.segment}</div>
+        <div class="mini-links">
+          <a href="${l.website}" target="_blank" rel="noopener noreferrer">Website</a>
+          ${l.linkedin?`<a href="${l.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>`:''}
+        </div>
+      </td>
+      <td><span class="pill pill-${l.priority.toLowerCase()}">${l.priority}</span></td>
+      <td>
+        <div class="dm-name">${l.dm_name}</div>
+        <div class="dm-title">${l.dm_title}</div>
+        <div class="dm-row">
+          ${l.dm_li?`<a href="${l.dm_li}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:#9ca3af">LinkedIn</a>`:''}
+          <span class="pill ${confClass}" style="font-size:9px">${l.dm_conf}</span>
+        </div>
+      </td>
+      <td><span class="pill ${sourceClass}">${l.source}</span></td>
+      <td style="white-space:nowrap;color:#374151">${l.size}</td>
+      <td style="white-space:nowrap;font-size:12px;color:#374151">${l.hq}</td>
+      <td><div class="signal-text">${l.signal}</div></td>
+      <td><div class="angle-text">${l.angle}</div></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setFilter(type, val, btn) {
+  if (type==='seg') {
+    segFilter=val;
+    document.querySelectorAll('#seg-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  } else {
+    priFilter=val;
+    document.querySelectorAll('#pri-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  }
+  btn.classList.add('active');
+  renderTable();
+}
+
+function sortBy(col) {
+  if (sortCol===col) sortDir*=-1;
+  else { sortCol=col; sortDir=1; }
+  document.querySelectorAll('thead th').forEach(th=>th.classList.remove('sorted'));
+  renderTable();
+}
+
+function downloadCSV() {
+  const filtered = getFiltered();
+  const cols = ['Company','Segment','Website','LinkedIn','Priority','Decision-maker Name','Title','Email','Email Confidence','DM LinkedIn','Source','Size','Funding/Stage','HQ','Signal/Fit','Suggested Angle','Sourcing Method'];
+  const rows = [cols, ...filtered.map(l=>[
+    l.company,l.segment,l.website,l.linkedin||'',
+    l.priority,l.dm_name,l.dm_title,l.dm_email||'',l.dm_conf,l.dm_li||'',
+    l.source,l.size,l.funding,l.hq,l.signal,l.angle,l.sourcing
+  ])];
+  const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download = 'sails-software-leads.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+function renderSignals() {
+  const grid = document.getElementById('signals-grid');
+  buyerSignals.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'signal-card';
+    div.innerHTML = `
+      <div class="sc-header">
+        <span class="sc-platform">${s.platform}</span>
+        <span class="pill pill-${s.strength.toLowerCase()}" style="font-size:9px">${s.strength}</span>
+      </div>
+      <div class="sc-summary">${s.summary}</div>
+      <div class="sc-fit">${s.fit}</div>
+      <a class="sc-link" href="${s.url}" target="_blank" rel="noopener noreferrer">View source →</a>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+renderTable();
+renderSignals();
+</script>
+</body>
+</html>
